@@ -1,46 +1,20 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Rest from "./rest";
-
-// const baseUrl = "https://mymoney-fb142.firebaseio.com/";
-
-const { useGet, usePost, useDelete } = Rest(baseUrl);
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Moves from "./pages/Moves";
 
 function App() {
-  const data = useGet("movimentacoes/2020-07");
-  const [postData, post] = usePost("movimentacoes/2020-07");
-  const [deleteData, remove] = useDelete();
-  const saveNew = () => {
-    post({ valor: 11, descricao: "esfiha2" });
-  };
-  const doRemove = () => {
-    remove("movimentacoes/2020-07/-MCTo_OjsS6QFBVfy5Aq");
-  };
-
   return (
-    <div>
-      <h1>My Money</h1>
+    <Router>
       <div>
-        {data.loading ? (
-          <p>Loading...</p>
-        ) : (
-          <pre>
-            `$
-            {JSON.stringify(data.data)}`
-          </pre>
-        )}
+        <Header />
+        <Route path="/" exact component={Home} />
+        <Route path="/moves/:data" component={Moves} />
       </div>
-
-      <button onClick={saveNew}>Salvar</button>
-
-      <div>
-        {postData.loading ? <p>Loading...</p> : `${JSON.stringify(postData)}`}
-      </div>
-
-      <div>{deleteData.loading ? <p>Loading...</p> : <p>Deletado</p>}</div>
-
-      <button onClick={doRemove}>Remover</button>
-    </div>
+    </Router>
   );
 }
 
