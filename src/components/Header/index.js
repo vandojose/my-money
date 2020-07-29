@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // import { Container } from './styles';
 
@@ -6,7 +7,9 @@ function Header() {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container">
-        <h1 className="navbar-brand">MyMoney</h1>
+        <Link to="/" className="navbar-brand">
+          MyMoney
+        </Link>
       </div>
     </nav>
   );
