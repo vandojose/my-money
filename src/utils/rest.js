@@ -35,7 +35,6 @@ const init = (baseUrl) => {
 
     useEffect(() => {
       refetch();
-      // eslint-disable-next-line
     }, [resource]);
 
     return {
@@ -46,8 +45,6 @@ const init = (baseUrl) => {
 
   const usePost = (resource) => {
     const [data, dispatch] = useReducer(reducer, INITIAL_STATE);
-
-    // eslint-disable-next-line no-shadow
     const post = async (data) => {
       dispatch({ type: "REQUEST" });
       const res = await axios.post(`${baseUrl + resource}.json`, data);

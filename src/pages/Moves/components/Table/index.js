@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 
 import Rest from "../../../../utils/rest";
@@ -37,24 +35,63 @@ function Table({ match }) {
     await remove(`moves/${match.params.data}/${id}`);
     data.refetch();
   };
-
-  return (
-    <>
-      {data.loading && (
-        <div className="col-12">
-          <div className="d-flex justify-content-center py-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
-      )}
-      {!data.data ? (
+  if (!data.data) {
+    return (
+      <>
         <div className="col-12">
           <div className="border border-warning text-center my-5 py-2">
             <span className="text-warning text-uppercase">
               Nenhuma movmentação encontrada
             </span>
+          </div>
+        </div>
+        <div className="col-12">
+          <h5 className="text-primary m-0 my-3">Add nova movimentação</h5>
+          <div className="row mx-0">
+            <div className="col-12 col-lg-6 m-0 mb-3">
+              <input
+                placeholder="Descrição"
+                type="text"
+                className="form-control"
+                value={description}
+                onChange={onChangeDescripition}
+              />
+            </div>
+            <div className="col-12 col-lg-6 m-0 mb-3">
+              <div className="input-group">
+                <input
+                  placeholder="Valor"
+                  type="number"
+                  className="form-control"
+                  aria-label="Recipient's username"
+                  aria-describedby="button-addon2"
+                  value={value}
+                  onChange={onChangeValue}
+                />
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-outline-primary"
+                    type="button"
+                    onClick={saveMovement}>
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {data.loading ? (
+        <div className="col-12">
+          <div className="d-flex justify-content-center py-5">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       ) : (
@@ -90,10 +127,8 @@ function Table({ match }) {
           </table>
         </div>
       )}
-
       <div className="col-12">
         <h5 className="text-primary m-0 my-3">Add nova movimentação</h5>
-
         <div className="row mx-0">
           <div className="col-12 col-lg-6 m-0 mb-3">
             <input
