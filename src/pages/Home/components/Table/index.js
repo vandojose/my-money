@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Loading from "../../../../components/Loading";
 import Rest from "../../../../utils/rest";
 
 const baseUrl = "https://mymoney-fb142.firebaseio.com/";
@@ -10,17 +11,11 @@ const baseUrl = "https://mymoney-fb142.firebaseio.com/";
 const { useGet } = Rest(baseUrl);
 
 function Table() {
-  const data = useGet("meses");
+  const data = useGet("months");
 
   return (
     <div className="col-12 overflow-auto">
-      {data.loading && (
-        <div className="d-flex justify-content-center py-5">
-          <div className="spinner-border" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      )}
+      {data.loading && <Loading />}
       {!data.loading && (
         <table className="table">
           <thead>
@@ -35,17 +30,17 @@ function Table() {
           </thead>
           <tbody>
             {data.data &&
-              Object.keys(data.data).map((mes, index) => {
+              Object.keys(data.data).map((month, index) => {
                 return (
-                  <tr key={mes}>
+                  <tr key={month}>
                     <td scope="row">{index + 1}</td>
                     <td>
-                      <Link to={`/moves/${mes}`}>{mes}</Link>
+                      <Link to={`/moves/${month}`}>{month}</Link>
                     </td>
-                    <td>{data.data[mes].previsao_entrada}</td>
-                    <td>{data.data[mes].entrada}</td>
-                    <td>{data.data[mes].previsao_saida}</td>
-                    <td>{data.data[mes].saida}</td>
+                    <td>{data.data[month].entry_forecast}</td>
+                    <td>{data.data[month].entry}</td>
+                    <td>{data.data[month].output_forecast}</td>
+                    <td>{data.data[month].output}</td>
                   </tr>
                 );
               })}

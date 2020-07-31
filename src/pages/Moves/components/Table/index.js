@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 
+import Loading from "../../../../components/Loading";
 import Rest from "../../../../utils/rest";
 
 const baseUrl = "https://mymoney-fb142.firebaseio.com/";
@@ -8,27 +11,30 @@ const { useGet, usePost, useDelete } = Rest(baseUrl);
 
 function Table({ match }) {
   const data = useGet(`moves/${match.params.data}`);
+  const dataMonth = useGet(`moves/${match.params.data}`);
   const [postData, save] = usePost(`moves/${match.params.data}`);
   const [removeData, remove] = useDelete();
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
-
   const onChangeDescripition = (evt) => {
     setDescription(evt.target.value);
   };
 
   const onChangeValue = (evt) => {
-    setValue(parseFloat(evt.target.value));
+    setValue(evt.target.value);
   };
 
   const saveMovement = async () => {
-    await save({
-      description,
-      value,
-    });
-    setDescription("");
-    setValue("");
-    data.refetch();
+    if (!isNaN(value) && value.search(/^[-]?\d+(\.)?\d+?$/) >= 0) {
+      await save({
+        description,
+        value: parseFloat(value),
+      });
+      setDescription("");
+      setValue("");
+      data.refetch();
+      dataMonth.refetch();
+    }
   };
 
   const removeMovement = async (id) => {
@@ -38,6 +44,9 @@ function Table({ match }) {
   if (!data.data) {
     return (
       <>
+        <div className="col-12">
+          <p>Previsão de entrada: {dataMonth.data.entry_forecast}</p>
+        </div>
         <div className="col-12">
           <div className="border border-warning text-center my-5 py-2">
             <span className="text-warning text-uppercase">
@@ -87,13 +96,7 @@ function Table({ match }) {
   return (
     <>
       {data.loading ? (
-        <div className="col-12">
-          <div className="d-flex justify-content-center py-5">
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <Loading />
       ) : (
         <div className="col-12">
           <table className="table">
