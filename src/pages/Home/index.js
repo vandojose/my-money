@@ -1,14 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import AddMonth from "./components/AddMonth";
-import Table from "./components/Table";
+import Main from "../../components/Main";
+import { Container } from "./styles";
 
-function Home() {
+function Home({ match }) {
   return (
-    <div className="container pt-3">
-      <AddMonth />
-      <Table />
-    </div>
+    <Main>
+      <Container>
+        <h2>Home</h2>
+        <div>
+          <Link to="/">Voltar</Link>
+        </div>
+      </Container>
+    </Main>
   );
 }
 

@@ -64,15 +64,27 @@ const init = (baseUrl) => {
 
     const remove = async (resource) => {
       dispatch({ type: "REQUEST" });
-      await axios.delete(`${baseUrl + resource}.json`, data).then(() => {
-        dispatch({
-          type: "SUCCESS",
-        });
+      await axios.delete(`${baseUrl + resource}.json`);
+      dispatch({
+        type: "SUCCESS",
       });
     };
     return [data, remove];
   };
-  return { useGet, usePost, useDelete };
+
+  const usePatch = () => {
+    const [data, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+    const patch = async (resource, data) => {
+      dispatch({ type: "REQUEST" });
+      await axios.patch(`${baseUrl + resource}.json`, data);
+      dispatch({
+        type: "SUCCESS",
+      });
+    };
+    return [data, patch];
+  };
+  return { useGet, usePost, useDelete, usePatch };
 };
 
 export default init;
