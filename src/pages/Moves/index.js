@@ -1,17 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Main from "../../components/Main";
+import Table from "./components/Table";
 import { Container } from "./styles";
 
-function Moves({ match }) {
+export default function Moves({ match }) {
   return (
-    <Container>
-      <h2>Movimentações</h2>
-      <div>
+    <Main>
+      <Container>
+        <h2>Movimentações</h2>
+        <Table match={match} />
         <Link to="/">Voltar</Link>
-      </div>
-    </Container>
+      </Container>
+    </Main>
   );
 }
-
-export default Moves;

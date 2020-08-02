@@ -1,23 +1,23 @@
-/* eslint-disable jsx-a11y/scope */
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { Link } from "react-router-dom";
 
 import Loading from "../../../../components/Loading";
 import Rest from "../../../../utils/rest";
+import { Container } from "./styles";
 
 const baseUrl = "https://mymoney-fb142.firebaseio.com/";
 
 const { useGet } = Rest(baseUrl);
 
-function Table() {
+export default function Table() {
   const data = useGet("months");
 
   return (
-    <div className="col-12 overflow-auto">
-      {data.loading && <Loading />}
-      {!data.loading && (
-        <table className="table">
+    <Container>
+      {data.loading ? (
+        <Loading />
+      ) : (
+        <table>
           <thead>
             <tr>
               <th>#</th>
@@ -33,7 +33,7 @@ function Table() {
               Object.keys(data.data).map((month, index) => {
                 return (
                   <tr key={month}>
-                    <td scope="row">{index + 1}</td>
+                    <td>{index + 1}</td>
                     <td>
                       <Link to={`/moves/${month}`}>{month}</Link>
                     </td>
@@ -47,8 +47,6 @@ function Table() {
           </tbody>
         </table>
       )}
-    </div>
+    </Container>
   );
 }
-
-export default Table;

@@ -1,20 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Main from "../../components/Main";
+import AddMonth from "./components/AddMonth";
+import Table from "./components/Table";
 import { Container } from "./styles";
 
-function Home({ match }) {
+export default function Home() {
   return (
     <Main>
       <Container>
         <h2>Home</h2>
-        <div>
-          <Link to="/">Voltar</Link>
-        </div>
+        <AddMonth />
+        <Table />
       </Container>
     </Main>
   );
 }
-
-export default Home;

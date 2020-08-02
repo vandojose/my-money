@@ -1,12 +1,15 @@
 import React from "react";
 
+import { Container, Loader } from "./styles";
+
 function Loading() {
   return (
-    <div className="d-flex justify-content-center py-5">
-      <div className="spinner-border" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-    </div>
+    <Container>
+      <Loader>
+        <div />
+        <div />
+      </Loader>
+    </Container>
   );
 }
 

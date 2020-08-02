@@ -20,6 +20,7 @@
     "jest": true
   },
   "rules": {
+    
     "max-len": [
       "error",
       {
@@ -42,7 +43,7 @@
     "no-return-assign": [
       "off"
     ],
-    "react/jsx-one-expression-per-line": [1, { "allow": "literal" }],
+    "react/jsx-one-expression-per-line": [1, { "allow": "single-child" }],
     "import-helpers/order-imports": [
       "warn",
       {
